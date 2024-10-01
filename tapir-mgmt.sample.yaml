@@ -1,9 +1,12 @@
-# Copyright 2024 Johan Stenstam, johan.stenstam@internetstiftelsen.se
+cli:
+   tapir-slogger:
+      url:      https://127.0.0.1:8080/api/v1
+      tlsurl:   https://127.0.0.1:8081/api/v1
+      apikey:   hogwarts-had-a-boggert-we-have-a-sloggert
 
 tapir:
    mqtt:
       server:		tls://mqtt.dev.dnstapir.se:8883
-      uid:		johani
       cacert:		/etc/dnstapir/certs/tapirCA.crt
       clientcert:	/etc/dnstapir/certs/tapir-mgmt.crt
       clientkey:	/etc/dnstapir/certs/tapir-mgmt.key
@@ -18,3 +21,14 @@ tapir:
       srcname:		dns-tapir
       topic:		config/down/tapir-pop
       signingkey:	/etc/dnstapir/certs/mqttsigner-key.pem
+
+certs:
+   expirationwarning: 30 # days before actual expiration
+   certdir:	/etc/dnstapir/certs
+   cacertfile:	/etc/dnstapir/certs/tapirCA.crt
+   tapir-slogger:
+      cert:	/etc/dnstapir/certs/tapir-mgmt.crt
+      key:	/etc/dnstapir/certs/tapir-mgmt.key
+   tapir-mgmt:
+      cert:	/etc/dnstapir/certs/tapir-mgmt.crt
+      key:	/etc/dnstapir/certs/tapir-mgmt.key
