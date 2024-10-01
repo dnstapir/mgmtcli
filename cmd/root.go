@@ -78,8 +78,7 @@ func initConfig() {
 func RootInitConfig() {
 	if standalone {
 		// In standalone mode we don't need to connect to TAPIR-SLOGGER, will not read any config files etc.
-		fmt.Printf("Running in standalone mode; no config files, etc.\n")
-		return
+		fmt.Printf("Running in standalone mode\n")
 	}
 
 	if cfgFile != "" {
