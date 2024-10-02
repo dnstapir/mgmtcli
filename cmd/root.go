@@ -151,9 +151,10 @@ func RootInitConfig() {
 		if cd == "" {
 			log.Fatalf("Error: missing config key: certs.certdir")
 		}
-		cert := cd + "/" + certname
+        key := viper.GetString("certs.tapir-mgmt.key")
+        cert := viper.GetString("certs.tapir-mgmt.cert")
 		tlsConfig, err := tapir.NewClientConfig(viper.GetString("certs.cacertfile"),
-			cert+".key", cert+".crt")
+			key, cert)
 		if err != nil {
 			log.Fatalf("Error: Could not set up TLS: %v", err)
 		}

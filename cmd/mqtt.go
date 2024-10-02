@@ -806,9 +806,9 @@ func PrintBootstrapMqttStatus(name string, src *SourceConf) error {
 	if cd == "" {
 		log.Fatalf("Error: missing config key: certs.certdir")
 	}
-	// cert := cd + "/" + certname
-	cert := cd + "/" + "tapir-pop"
-	tlsConfig, err := tapir.NewClientConfig(viper.GetString("certs.cacertfile"), cert+".key", cert+".crt")
+    key := viper.GetString("certs.tapir-mgmt.key")
+    cert := viper.GetString("certs.tapir-mgmt.cert")
+	tlsConfig, err := tapir.NewClientConfig(viper.GetString("certs.cacertfile"), key, cert)
 	if err != nil {
 		log.Fatalf("BootstrapMqttSource: Error: Could not set up TLS: %v", err)
 	}
