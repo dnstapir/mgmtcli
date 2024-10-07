@@ -106,8 +106,8 @@ func RootInitConfig() {
 				fmt.Println("Using config file:", viper.ConfigFileUsed())
 			}
 
-			viper.SetConfigFile(tapir.DefaultTapirCliCfgFile)
-			viper.AutomaticEnv() // read in environment variables that match
+			//viper.SetConfigFile(tapir.DefaultTapirCliCfgFile)
+			//viper.AutomaticEnv() // read in environment variables that match
 
 			// If a config file is found, read it in.
 			if err := viper.MergeInConfig(); err != nil {
