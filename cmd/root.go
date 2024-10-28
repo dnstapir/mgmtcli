@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/dnstapir/tapir"
+	"github.com/dnstapir/tapir/cmd"
 )
 
 const DefaultMgmtCfgFile = "/etc/dnstapir/tapir-mgmt.yaml"
@@ -56,6 +57,15 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&tapir.GlobalCF.Debug, "debug", "d", false, "Debugging output")
 	rootCmd.PersistentFlags().BoolVarP(&tapir.GlobalCF.ShowHdr, "headers", "H", false, "Show column headers")
 	rootCmd.PersistentFlags().BoolVarP(&tapir.GlobalCF.UseTLS, "tls", "", true, "Use TLS API connections")
+
+	rootCmd.AddCommand(cmd.DebugCmd)
+	rootCmd.AddCommand(cmd.BumpCmd)
+	rootCmd.AddCommand(cmd.RpzCmd)
+    rootCmd.AddCommand(cmd.KeyUploadCmd)
+    rootCmd.AddCommand(cmd.MqttCmd)
+    rootCmd.AddCommand(cmd.BootstrapPopCmd)
+	rootCmd.AddCommand(cmd.ApiCmd) //  TODO move into BootstrapPop and Slogger
+    rootCmd.AddCommand(cmd.SloggerCmd)
 }
 
 var validate *validator.Validate
@@ -93,7 +103,7 @@ func RootInitConfig() {
 	} else {
 		switch Prog {
 		case "tapir-mgmt":
-			certname = "tapir-mgmt"
+			tapir.GlobalCF.Certname = "tapir-mgmt"
 			servername = "tapir-slogger"
 			viper.SetConfigFile(DefaultMgmtCfgFile)
 			viper.AutomaticEnv() // read in environment variables that match
