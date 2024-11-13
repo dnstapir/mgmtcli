@@ -106,16 +106,16 @@ func RootInitConfig() {
 				fmt.Println("Using config file:", viper.ConfigFileUsed())
 			}
 
-			viper.SetConfigFile(tapir.DefaultTapirCliCfgFile)
-			viper.AutomaticEnv() // read in environment variables that match
+			// viper.SetConfigFile(tapir.DefaultTapirCliCfgFile)
+			// viper.AutomaticEnv() // read in environment variables that match
 
 			// If a config file is found, read it in.
-			if err := viper.MergeInConfig(); err != nil {
-				fmt.Printf("Error reading config '%s': %v\n", viper.ConfigFileUsed(), err)
-			}
-			if tapir.GlobalCF.Debug {
-				fmt.Println("Using config file:", viper.ConfigFileUsed())
-			}
+			// if err := viper.MergeInConfig(); err != nil {
+			// 	fmt.Printf("Error reading config '%s': %v\n", viper.ConfigFileUsed(), err)
+			// }
+			// if tapir.GlobalCF.Debug {
+			// 	fmt.Println("Using config file:", viper.ConfigFileUsed())
+			// }
 
 		default:
 			fmt.Printf("Unknown value for Prog: \"%s\"\n", Prog)

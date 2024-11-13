@@ -768,7 +768,7 @@ var mqttTapirBootstrapStatusCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(mqttCmd)
+	debugCmd.AddCommand(mqttCmd)
 	mqttCmd.AddCommand(mqttEngineCmd, mqttTapirCmd)
 	mqttTapirCmd.AddCommand(mqttTapirObservationsCmd, mqttTapirConfigCmd, mqttTapirStatusCmd, mqttTapirBootstrapCmd)
 	mqttTapirBootstrapCmd.AddCommand(mqttTapirBootstrapStatusCmd)
@@ -933,6 +933,33 @@ func SetupSubPrinter(inbox chan tapir.MqttPkgIn) {
 					edgeId := parts[2]
 					edgeComponent := parts[3]
 					_ = edgeId        // Avoid unused variable error
+					_ = edgeComponent // Avoid unused variable error
+
+					fmt.Printf("SetupSubPrinter: Received TAPIR MQTT Message on topic '%s':\n%+v\n", pkg.Topic, string(pkg.Payload))
+
+					var tm tapir.TapirMsg
+					err := json.Unmarshal(pkg.Payload, &tm)
+					if err != nil {
+						fmt.Printf("MQTT: failed to decode json: %v", err)
+						continue
+					}
+					fmt.Printf("Received TAPIR Observation Message on topic %s\n", pkg.Topic)
+					var out []string
+					for _, a := range tm.Added {
+						out = append(out, fmt.Sprintf("ADD: %s|%032b", a.Name, a.TagMask))
+					}
+					for _, a := range tm.Removed {
+						out = append(out, fmt.Sprintf("DEL: %s", a.Name))
+					}
+					fmt.Println(columnize.SimpleFormat(out))
+				} else {
+					fmt.Printf("Received TAPIR MQTT Message on unknown topic %s\n", pkg.Topic)
+				}
+
+			case regexp.MustCompile(`^observations/down/[^/]+$`).MatchString(pkg.Topic):
+				parts := strings.Split(pkg.Topic, "/")
+				if len(parts) == 3 {
+					edgeComponent := parts[2]
 					_ = edgeComponent // Avoid unused variable error
 
 					fmt.Printf("SetupSubPrinter: Received TAPIR MQTT Message on topic '%s':\n%+v\n", pkg.Topic, string(pkg.Payload))
