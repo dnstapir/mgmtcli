@@ -64,7 +64,7 @@ func init() {
     rootCmd.AddCommand(cmd.KeyUploadCmd)
     rootCmd.AddCommand(cmd.MqttCmd)
 	rootCmd.AddCommand(cmd.ApiCmd) //  TODO move into Pop and Slogger
-	rootCmd.AddCommand(cmd.ColourlistsCmd) //  TODO move into BootstrapPop and Slogger
+	rootCmd.AddCommand(cmd.FilterlistsCmd) //  TODO move into BootstrapPop and Slogger
     rootCmd.AddCommand(cmd.SloggerCmd)
 }
 
